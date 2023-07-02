@@ -1,5 +1,8 @@
 ﻿using MemoryGame;
 using System;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+
 
 public class HtmlBoardBuilder : IBoardBuilder
 {
@@ -8,17 +11,23 @@ public class HtmlBoardBuilder : IBoardBuilder
     private List<string> images = new List<string>() { };
     private List<int> imageAssignedCount = new List<int>() { };
     protected Board htmlBoard;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public HtmlBoardBuilder()
+    public HtmlBoardBuilder(IWebHostEnvironment webHostEnvironment)
     {
+        _webHostEnvironment = webHostEnvironment;
     }
 
     private void GetImages()
     {
+        var folderPath = "/images/cards/";
+        string rootPath = _webHostEnvironment.ContentRootPath;
+        string[] cards = System.IO.Directory.GetFiles(rootPath + folderPath);
         for (int i = 0; i < (m * n) / 2; i++)
         {
-            var imageTitle = string.Format("image{0}", i);
-            images.Add(imageTitle);
+            var card = cards[i].Split('\\');
+            var nameOfCard = card[card.Length - 1];
+            images.Add(nameOfCard);
             imageAssignedCount.Add(0);
         }
     }
