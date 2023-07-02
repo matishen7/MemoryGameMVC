@@ -1,15 +1,15 @@
 ﻿using MemoryGame;
 using System;
 
-public class ConsoleBoardBuilder : IBoardBuilder
+public class HtmlBoardBuilder : IBoardBuilder
 {
     private int m;
     private int n;
     private List<string> images = new List<string>() { };
     private List<int> imageAssignedCount = new List<int>() { };
-    protected Board consoleBoard;
+    protected Board htmlBoard;
 
-    public ConsoleBoardBuilder()
+    public HtmlBoardBuilder()
     {
     }
 
@@ -30,7 +30,7 @@ public class ConsoleBoardBuilder : IBoardBuilder
             for (int j = 0; j < n; j++)
             {
                 var imageTitle = PickRandomImage(images, imageAssignedCount);
-                consoleBoard.cells[i][j].SetImage(imageTitle);
+                htmlBoard.cells[i][j].SetImage(imageTitle);
             }
         }
     }
@@ -40,14 +40,14 @@ public class ConsoleBoardBuilder : IBoardBuilder
         this.m = m;
         this.n = n;
         GetImages();
-        consoleBoard = new Board(m, n);
+        htmlBoard = new Board(m, n);
         return this;
     }
 
     public Board Build()
     {
         SetImages();
-        return consoleBoard;
+        return htmlBoard;
     }
 
     private T PickRandomImage<T>(List<T> list, List<int> assignedCount)

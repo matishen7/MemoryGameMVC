@@ -15,7 +15,12 @@ namespace MemoryGameMVC.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var board = new HtmlBoardBuilder()
+                .WithDimensions(3, 2)
+                .Build();
+
+
+            return View(board);
         }
 
         public IActionResult Privacy()
