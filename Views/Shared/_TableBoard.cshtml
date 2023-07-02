@@ -8,9 +8,23 @@
             @for (int j = 0; j < Model.cells[i].Length; j++)
             {
                 <td>
-                    <img src="@Model.cells[i][j].GetImage()">
+                    <img src="images/cards/backside.png" class="card-back">
+
+                    <img src="@Model.cells[i][j].GetImage()" class="card-front">
                 </td>
             }
         </tr>
     }
 </table>
+
+<script>
+    $(document).ready(function() {
+  // Handle click event on table cells
+  $('#table_board td').click(function() {
+    // Toggle the visibility of card images
+    $(this).find('.card-front, .card-back').toggle();
+  });
+});
+
+</script>
+
