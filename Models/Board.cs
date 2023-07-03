@@ -22,54 +22,6 @@
             }
         }
 
-        public void Display()
-        {
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                    if (cells[i][j].IsFound()) Console.Write("* \t");
-                    else Console.Write(string.Format("? \t"));
-                Console.WriteLine();
-            }
-        }
-
-        public void RevealAllCards()
-        {
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                    Console.Write(string.Format("{0}\t", cells[i][j].GetImage()));
-                Console.WriteLine();
-            }
-        }
-
-        public void Display(int x, int y)
-        {
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                    if (cells[i][j].IsFound()) Console.Write("* \t");
-                    else if (i == x && j == y) Console.Write(string.Format("{0}\t", cells[i][j].GetImage()));
-                    else Console.Write(string.Format("? \t"));
-                Console.WriteLine();
-            }
-        }
-
-        public void Display(int x, int y, int a, int b)
-        {
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (cells[i][j].IsFound()) Console.Write("* \t");
-                    else if (i == x && j == y) Console.Write(string.Format("{0}\t", cells[i][j].GetImage()));
-                    else if (i == a && j == b) Console.Write(string.Format("{0}\t", cells[i][j].GetImage()));
-                    else Console.Write(string.Format("? \t"));
-                }
-                Console.WriteLine();
-            }
-        }
-
         public bool AllCardsFound()
         {
             for (int i = 0; i < m; i++)
@@ -77,17 +29,5 @@
                     if (cells[i][j].IsFound() == false) return false;
             return true;
         }
-
-        public bool CheckIfCardsMatch(int x, int y, int a, int b)
-        {
-            if (cells[x][y].GetImage().Equals(cells[a][b].GetImage()))
-            {
-                cells[x][y].SetAsFound();
-                cells[a][b].SetAsFound();
-                return true;
-            }
-            return false;
-        }
-
     }
 }
