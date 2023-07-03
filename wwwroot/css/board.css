@@ -28,3 +28,8 @@
             background-color: rgba(0, 0, 0, 0.2);
             z-index: -1;
         }
+.card-front {
+    display: none; /* Hide the front image initially */
+    width: 100%;
+    height: 100%;
+}

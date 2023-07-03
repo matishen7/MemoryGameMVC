@@ -20,7 +20,7 @@ namespace MemoryGameMVC.Controllers
         public IActionResult Index()
         {
             var board = new HtmlBoardBuilder(_webHostEnvironment)
-                .WithDimensions(6, 11)
+                .WithDimensions(4, 4)
                 .Build();
 
 
