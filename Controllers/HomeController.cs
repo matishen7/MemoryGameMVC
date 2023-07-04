@@ -27,6 +27,16 @@ namespace MemoryGameMVC.Controllers
             return View(board);
         }
 
+        [HttpPost]
+        public IActionResult ClickCard(string firstImage, string secondImage)
+        {
+            // Compare the image URLs to check if they match
+            bool imagesMatch = firstImage == secondImage;
+
+            // Return the result as JSON
+            return Json(new { match = imagesMatch });
+        }
+
         public IActionResult Privacy()
         {
             return View();

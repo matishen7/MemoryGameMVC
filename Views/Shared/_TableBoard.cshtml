@@ -7,10 +7,10 @@
         <tr>
             @for (int j = 0; j < Model.cells[i].Length; j++)
             {
-                <td>
+                var imageUrl = Model.cells[i][j].GetImage();
+                <td class="game-cell" data-row="@i" data-col="@j" data-image="@imageUrl">
                     <img src="images/cards/backside.png" class="card-back">
-
-                    <img src="@Model.cells[i][j].GetImage()" class="card-front">
+                    <img src="@imageUrl" class="card-front">
                 </td>
             }
         </tr>
