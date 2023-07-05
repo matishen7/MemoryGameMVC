@@ -1,4 +1,5 @@
-﻿using MemoryGameMVC.Models;
+﻿using MemoryGame;
+using MemoryGameMVC.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,32 +10,20 @@ namespace MemoryGameMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private Board _gameBoard;
 
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _gameBoard = new HtmlBoardBuilder(_webHostEnvironment)
+                .WithDimensions(4, 4)
+                .Build();
         }
 
         public IActionResult Index()
         {
-            var board = new HtmlBoardBuilder(_webHostEnvironment)
-                .WithDimensions(4, 4)
-                .Build();
-
-
-            return View(board);
-        }
-
-        [HttpPost]
-        public IActionResult ClickCard(string firstImage, string secondImage)
-        {
-            // Compare the image URLs to check if they match
-            bool imagesMatch = firstImage == secondImage;
-
-            // Return the result as JSON
-            return Json(new { match = imagesMatch });
+            return View(_gameBoard);
         }
 
         public IActionResult Privacy()

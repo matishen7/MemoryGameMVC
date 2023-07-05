@@ -22,7 +22,7 @@
             // Make an AJAX POST request to the controller with the image URLs
             $.ajax({
                 type: "POST",
-                url: "/Home/ClickCard",
+                url: "/Board/ClickCard",
                 data: {
                     firstImage: firstCellImage,
                     secondImage: secondCellImage

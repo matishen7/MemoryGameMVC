@@ -1,33 +1,29 @@
 ﻿namespace MemoryGame
 {
-    public class Board : IBoard
+    public class Board
     {
-        private int n, m;
-        public Cell[][] cells;
+        public int n, m;
+        public List<Card> cards;
         public Board(int m, int n)
         {
-            this.m = m;
-            this.n = n;
-            CellsBuild();
+            cards = new List<Card>();
         }
 
-        private void CellsBuild()
+        public void Shuffle()
         {
-            cells = new Cell[m][];
-            for (int i = 0; i < m; i++)
-            {
-                cells[i] = new Cell[n];
-                for (int j = 0; j < n; j++)
-                    cells[i][j] = new Cell();
-            }
+
         }
 
-        public bool AllCardsFound()
+        public void FlipCard(int cardId)
         {
-            for (int i = 0; i < m; i++)
-                for (int j = 0; j < n; j++)
-                    if (cells[i][j].IsFound() == false) return false;
-            return true;
+            var cardToFlip = cards.First(x => x.Id == cardId);
+            if (cardToFlip != null) { cardToFlip.IsFlipped = true; }
+        }
+
+        public bool CheckForMatches()
+        {
+            // Implement match checking logic
+            return false;
         }
     }
 }

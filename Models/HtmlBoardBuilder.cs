@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 
-public class HtmlBoardBuilder : IBoardBuilder
+public class HtmlBoardBuilder
 {
     private int m;
     private int n;
@@ -39,7 +39,7 @@ public class HtmlBoardBuilder : IBoardBuilder
             for (int j = 0; j < n; j++)
             {
                 var imageTitle = PickRandomImage(images, imageAssignedCount);
-                htmlBoard.cells[i][j].SetImage(imageTitle);
+                htmlBoard.cards[i][j].SetImage(imageTitle);
             }
         }
     }

@@ -2,12 +2,12 @@
 
 <h2>Memory Game Board</h2>
 <table id="table_board">
-    @for (int i = 0; i < Model.cells.Length; i++)
+    @for (int i = 0; i < Model.cards.Length; i++)
     {
         <tr>
-            @for (int j = 0; j < Model.cells[i].Length; j++)
+            @for (int j = 0; j < Model.cards[i].Length; j++)
             {
-                var imageUrl = Model.cells[i][j].GetImage();
+                var imageUrl = Model.cards[i][j].GetImage();
                 <td class="game-cell" data-row="@i" data-col="@j" data-image="@imageUrl">
                     <img src="images/cards/backside.png" class="card-back">
                     <img src="@imageUrl" class="card-front">
