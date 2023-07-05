@@ -1,4 +1,5 @@
-﻿using MemoryGameMVC.Models;
+﻿using MemoryGame;
+using MemoryGameMVC.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,13 +16,12 @@ namespace MemoryGameMVC.Controllers
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+
         }
 
-        [HttpPost]
-        public IActionResult ClickCard(string firstImage, string secondImage)
+        public IActionResult Index()
         {
-            bool imagesMatch = firstImage == secondImage;
-            return Json(new { match = imagesMatch });
+            return View("_TableBoard");
         }
     }
 }

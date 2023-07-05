@@ -10,16 +10,19 @@ namespace MemoryGameMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private Board _gameBoard;
 
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
+            _gameBoard = new Board();
         }
 
         public IActionResult Index()
         {
-            return View();
+            _gameBoard.Shuffle();
+            return View(_gameBoard);
         }
 
         public IActionResult Privacy()

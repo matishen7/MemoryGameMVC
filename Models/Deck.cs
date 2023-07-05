@@ -1,10 +1,11 @@
 ﻿using MemoryGame;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MemoryGameMVC.Models
 {
     public class Deck
     {
-        private string folderPath = "/images/cards/";
+        private string folderPath = "\\images\\cards\\";
         public List<Card> cards;
         public Deck()
         {
@@ -14,12 +15,13 @@ namespace MemoryGameMVC.Models
         private List<Card> GetDeck()
         {
             var c = new List<Card>();
-            string[] files = Directory.GetFiles(folderPath);
+            string[] files = System.IO.Directory.GetFiles("C:\\Mentorship\\MemoryGameMVC\\wwwroot" + folderPath);
             for (int i = 0; i < files.Length; i++)
             {
                 var card = files[i].Split('\\');
                 var nameOfCard = card[card.Length - 1];
-                c.Add(new Card() { Name = nameOfCard });
+                if (nameOfCard.Equals("backside.png")) continue;
+                c.Add(new Card() { Name = folderPath + nameOfCard });
             }
             return c;
         }
