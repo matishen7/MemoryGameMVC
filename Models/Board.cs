@@ -4,9 +4,9 @@ namespace MemoryGame
 {
     public class Board
     {
-        public int n, m;
+        public int n = 3, m = 2;
         public Deck deck;
-        public List<List<Cell>> cells;
+        public List<Cell> cells;
         public Board()
         {
             deck = new Deck();
@@ -14,32 +14,30 @@ namespace MemoryGame
 
         public void Shuffle()
         {
-            cells = new List<List<Cell>>();
-            int index = 0;
-
-            for (int i = 0; i < m; i++)
+            cells = new List<Cell>();
+            for (int i = 0; i < (m * n); i++)
             {
-                var row = new List<Cell>();
-                for (int j = 0; j < n; j++)
-                {
-                    var pickedCard = deck.PickRandomCardFromDeck();
-
-                    row.Add(new Cell()
-                    {
-                        Id = index,
-                        Image = pickedCard.Name,
-                    });
-
-                    index++;
-                }
-                cells.Add(row);
+                var pickedCard = deck.PickRandomCardFromDeck();
+                cells.Add(new Cell() { Image = pickedCard.Name });
+                cells.Add(new Cell() { Image = pickedCard.Name });
             }
 
+            Random random = new Random();
+
+            int a = cells.Count;
+            while (a > 1)
+            {
+                a--;
+                int k = random.Next(a + 1);
+                Cell value = cells[k];
+                cells[k] = cells[n];
+                cells[n] = value;
+            }
         }
 
         public bool FlipCard(int cardId)
         {
-            var cellToFlip = cells.First(x => x.Id == cardId);
+            var cellToFlip = cells.First(x=>x.Id == cardId);
             if (cellToFlip != null) { cellToFlip.IsFlipped = true; return true; }
             return false;
         }

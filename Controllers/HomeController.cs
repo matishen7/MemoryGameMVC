@@ -10,20 +10,16 @@ namespace MemoryGameMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private Board _gameBoard;
 
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
-            _gameBoard = new HtmlBoardBuilder(_webHostEnvironment)
-                .WithDimensions(4, 4)
-                .Build();
         }
 
         public IActionResult Index()
         {
-            return View(_gameBoard);
+            return View();
         }
 
         public IActionResult Privacy()
