@@ -1,23 +1,47 @@
-﻿namespace MemoryGame
+﻿using MemoryGameMVC.Models;
+
+namespace MemoryGame
 {
     public class Board
     {
         public int n, m;
-        public List<Card> cards;
-        public Board(int m, int n)
+        public Deck deck;
+        public List<List<Cell>> cells;
+        public Board()
         {
-            cards = new List<Card>();
+            deck = new Deck();
         }
 
         public void Shuffle()
         {
+            cells = new List<List<Cell>>();
+            int index = 0;
+
+            for (int i = 0; i < m; i++)
+            {
+                var row = new List<Cell>();
+                for (int j = 0; j < n; j++)
+                {
+                    var pickedCard = deck.PickRandomCardFromDeck();
+
+                    row.Add(new Cell()
+                    {
+                        Id = index,
+                        Image = pickedCard.Name,
+                    });
+
+                    index++;
+                }
+                cells.Add(row);
+            }
 
         }
 
-        public void FlipCard(int cardId)
+        public bool FlipCard(int cardId)
         {
-            var cardToFlip = cards.First(x => x.Id == cardId);
-            if (cardToFlip != null) { cardToFlip.IsFlipped = true; }
+            var cellToFlip = cells.First(x => x.Id == cardId);
+            if (cellToFlip != null) { cellToFlip.IsFlipped = true; return true; }
+            return false;
         }
 
         public bool CheckForMatches()
