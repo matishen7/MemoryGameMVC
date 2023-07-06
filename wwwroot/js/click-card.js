@@ -1,50 +1,35 @@
 ﻿$(document).ready(function () {
-    var firstCell = null;
-
     $(".game-cell").click(function () {
         var clickedCell = $(this);
+        var id = clickedCell.data("id");
 
-        // If it's the first cell being clicked, store the reference and show the front image
-        if (firstCell === null) {
-            firstCell = clickedCell;
-            clickedCell.find(".card-back").hide();
-        } else {
-            // It's the second cell being clicked
-            var id = firstCell.data("id");
+        // Get the image URL from the data attribute
+        var cellImage = clickedCell.data("image");
 
-            // Get the image URLs from the data attributes
-            var firstCellImage = firstCell.data("image");
-            var secondCellImage = clickedCell.data("image");
-
-            // Make an AJAX POST request to the controller with the image URLs
-            $.ajax({
-                type: "POST",
-                url: "/Home/FlipCard",
-                data: {
-                    id: id
-                },
-                success: function (response) {
-                    // Handle the response from the server
-                    if (response.match) {
-                        // The images match
-                        console.log("Images match!");
-                    } else {
-                        // The images don't match
-                        console.log("Images don't match!");
-                    }
-                },
-                error: function (error) {
-                    // Handle any error that might occur during the AJAX request
-                    console.error("Error sending data:", error);
-                },
-                complete: function () {
-                    // Reset the first cell reference after processing the response
-                    firstCell = null;
+        // Make an AJAX POST request to the controller with the image URL
+        $.ajax({
+            type: "POST",
+            url: "/Home/FlipCard",
+            data: {
+                id: id
+            },
+            success: function (response) {
+                // Handle the response from the server
+                if (response.match) {
+                    // The image matches
+                    console.log("Image matches!");
+                } else {
+                    // The image doesn't match
+                    console.log("Image doesn't match!");
                 }
-            });
+            },
+            error: function (error) {
+                // Handle any error that might occur during the AJAX request
+                console.error("Error sending data:", error);
+            }
+        });
 
-            // Show the front image of the second cell
-            clickedCell.find(".card-back").hide();
-        }
+        // Show the front image of the clicked cell
+        clickedCell.find(".card-back").hide();
     });
 });

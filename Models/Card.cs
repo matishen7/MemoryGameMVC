@@ -20,7 +20,7 @@
 
         public Cell()
         {
-            Id = ++maxId;
+            Id = maxId++;
         }
     }
 }
