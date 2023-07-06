@@ -7,15 +7,17 @@ namespace MemoryGame
         public int n = 3, m = 2;
         public Deck deck;
         public List<Cell> cells;
+        public Stack<Cell> stack;
         public Board()
         {
             deck = new Deck();
+            cells = new List<Cell>();
+            stack = new Stack<Cell>();
         }
 
         public void Shuffle()
         {
-            cells = new List<Cell>();
-            for (int i = 0; i < (m * n); i++)
+            for (int i = 0; i < (m * n) / 2; i++)
             {
                 var pickedCard = deck.PickRandomCardFromDeck();
                 cells.Add(new Cell() { Image = pickedCard.Name });
@@ -37,8 +39,12 @@ namespace MemoryGame
 
         public bool FlipCard(int cardId)
         {
-            var cellToFlip = cells.First(x=>x.Id == cardId);
-            if (cellToFlip != null) { cellToFlip.IsFlipped = true; return true; }
+            var cellToFlip = cells.First(x => x.Id == cardId);
+            if (cellToFlip != null)
+            {
+                cellToFlip.IsFlipped = true;
+                return true;
+            }
             return false;
         }
 

@@ -1,28 +1,46 @@
 ﻿using MemoryGame;
 using MemoryGameMVC.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace MemoryGameMVC.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private Board _gameBoard;
+        private Board gameBoard;
+        private static Dictionary<string, Board> _gameBoards = new Dictionary<string, Board>();
 
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _webHostEnvironment = webHostEnvironment;
-            _gameBoard = new Board();
         }
 
         public IActionResult Index()
         {
-            _gameBoard.Shuffle();
-            return View(_gameBoard);
+            string sessionId = HttpContext.Session.Id;
+            if (!_gameBoards.ContainsKey(sessionId))
+            {
+                var gameBoard = new Board();
+                gameBoard.Shuffle();
+                _gameBoards.Add(sessionId, gameBoard);
+            }
+
+            var currentGameBoard = _gameBoards[sessionId];
+            return View(currentGameBoard);
+        }
+
+        public IActionResult FlipCard(int id)
+        {
+            var currentGameBoard = _gameBoards.Values.First();
+            currentGameBoard.FlipCard(id);
+            return View("Index", currentGameBoard);
         }
 
         public IActionResult Privacy()

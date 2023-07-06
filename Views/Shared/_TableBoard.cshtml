@@ -1,6 +1,6 @@
 ﻿@{
     @model MemoryGame.Board;
-    int count = 0;
+    int count = 1;
 }
 
 <h2>Memory Game Board</h2>
@@ -10,8 +10,8 @@
         <tr>
             @for (int j = 0; j < Model.n; j++)
             {
-                var imageUrl = Model.cells[count].Image;
-                <td class="game-cell" data-row="@i" data-col="@j" data-image="@imageUrl">
+                var imageUrl = Model.cells[count-1].Image;
+                <td class="game-cell" data-id="@count" data-image="@imageUrl">
                     <img src="images/cards/backside.png" class="card-back">
                     <img src="@imageUrl" class="card-front">
                 </td>

@@ -10,10 +10,7 @@
             clickedCell.find(".card-back").hide();
         } else {
             // It's the second cell being clicked
-            var firstCellRow = firstCell.data("row");
-            var firstCellCol = firstCell.data("col");
-            var secondCellRow = clickedCell.data("row");
-            var secondCellCol = clickedCell.data("col");
+            var id = firstCell.data("id");
 
             // Get the image URLs from the data attributes
             var firstCellImage = firstCell.data("image");
@@ -22,10 +19,9 @@
             // Make an AJAX POST request to the controller with the image URLs
             $.ajax({
                 type: "POST",
-                url: "/Board/ClickCard",
+                url: "/Home/FlipCard",
                 data: {
-                    firstImage: firstCellImage,
-                    secondImage: secondCellImage
+                    id: id
                 },
                 success: function (response) {
                     // Handle the response from the server
