@@ -1,5 +1,6 @@
-﻿@{
-    @model MemoryGame.Board;
+﻿@model MemoryGame.Board
+
+@{
     int count = 0;
 }
 
@@ -11,7 +12,10 @@
             @for (int j = 0; j < Model.n; j++)
             {
                 var imageUrl = Model.cells[count].Image;
-                <td class="game-cell" data-id="@Model.cells[count].Id" data-image="@imageUrl">
+                var cardId = Model.cells[count].Id;
+                var matchClass = Model.cells[count].IsMatched ? "matched" : "";
+                var disabledAttribute = Model.cells[count].IsMatched ? "disabled" : "";
+                <td class="game-cell @matchClass" data-id="@cardId" data-image="@imageUrl">
                     <img src="images/cards/backside.png" class="card-back">
                     <img src="@imageUrl" class="card-front">
                 </td>
@@ -21,3 +25,4 @@
     }
 </table>
 
+<p>@(Model.matchedCells) Matches Found</p>

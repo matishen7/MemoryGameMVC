@@ -15,7 +15,7 @@
             },
             success: function (response) {
                 // Handle the response from the server
-                if (response.match) {
+                if (response.match == true) {
                     // The image matches
                     console.log("Image matches!");
                 } else {

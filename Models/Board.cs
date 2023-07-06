@@ -8,6 +8,7 @@ namespace MemoryGame
         public Deck deck;
         public List<Cell> cells;
         public Stack<Cell> stack;
+        public int matchedCells = 0;
         public Board()
         {
             deck = new Deck();
@@ -37,10 +38,10 @@ namespace MemoryGame
             }
         }
 
-        public void FlipCard(int cardId)
+        public bool FlipCard(int cardId)
         {
             var cellToFlip = cells.First(x => x.Id == cardId);
-            if (stack.Count == 0) { stack.Push(cellToFlip); return; };
+            if (stack.Count == 0) { stack.Push(cellToFlip); return false; };
             if (stack.Count == 1)
             {
                 var firstCell = stack.Pop();
@@ -49,13 +50,23 @@ namespace MemoryGame
                 {
                     firstCell.IsMatched = true;
                     cellToFlip.IsMatched = true;
+                    matchedCells++;
                 }
+                return match;
             }
+            return false;
         }
 
         public bool CheckForMatches(Cell first, Cell second)
         {
             return first.Image.Equals(second.Image);
+        }
+
+        public bool EndGame()
+        {
+            for (int i = 0; i < cells.Count; i++)
+                if (cells[i].IsMatched == false) return false;
+            return true;
         }
     }
 }

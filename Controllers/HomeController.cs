@@ -27,7 +27,7 @@ namespace MemoryGameMVC.Controllers
             string sessionId = HttpContext.Session.Id;
             if (!_gameBoards.ContainsKey(sessionId))
             {
-                var gameBoard = new Board();
+                gameBoard = new Board();
                 gameBoard.Shuffle();
                 _gameBoards.Add(sessionId, gameBoard);
             }
@@ -39,7 +39,7 @@ namespace MemoryGameMVC.Controllers
         public IActionResult FlipCard(int id)
         {
             var currentGameBoard = _gameBoards.Values.First();
-            currentGameBoard.FlipCard(id);
+            var match = currentGameBoard.FlipCard(id);
             return View("Index", currentGameBoard);
         }
 

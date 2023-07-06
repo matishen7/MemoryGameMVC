@@ -6,41 +6,38 @@
     $('#table_board td').click(function () {
         var clickedCard = $(this);
 
-        // Check if the clicked card is already disabled
-        if (disabledCards.includes(clickedCard)) {
+        // Check if the clicked card is disabled (already matched)
+        if (clickedCard.hasClass('matched') || clickedCard.hasClass('opened')) {
             return; // Ignore the click event for disabled cards
-        }
-
-        // Check if a card is already opened
-        if (openedCard) {
-            // Close the previously opened card
-            openedCard.find('.card-front').hide();
-            openedCard.find('.card-back').show();
-            openedCard = null;
         }
 
         // Open the clicked card
         clickedCard.find('.card-front').show();
         clickedCard.find('.card-back').hide();
+        clickedCard.addClass('opened');
 
         // Check if this is the first opened card
         if (openedCard === null) {
             openedCard = clickedCard;
         } else {
             // Check if the images of the two cards match
-            if (clickedCard.find('.card-back img').attr('src') === openedCard.find('.card-back img').attr('src')) {
+            if (clickedCard.data('image') === openedCard.data('image')) {
                 // Disable the matched cards
                 disabledCards.push(clickedCard, openedCard);
+                clickedCard.addClass('matched');
+                openedCard.addClass('matched');
             } else {
                 // If the images don't match, close both cards after a short delay
                 setTimeout(function () {
                     clickedCard.find('.card-front').hide();
                     clickedCard.find('.card-back').show();
+                    clickedCard.removeClass('opened');
                     openedCard.find('.card-front').hide();
                     openedCard.find('.card-back').show();
-                }, 1000);
+                    openedCard.removeClass('opened');
+                    openedCard = null; // Reset the openedCard variable
+                }, 3000); // Delay of 3 seconds (3000 milliseconds)
             }
-            openedCard = null;
         }
     });
 });
