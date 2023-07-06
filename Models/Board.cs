@@ -37,21 +37,25 @@ namespace MemoryGame
             }
         }
 
-        public bool FlipCard(int cardId)
+        public void FlipCard(int cardId)
         {
             var cellToFlip = cells.First(x => x.Id == cardId);
-            if (cellToFlip != null)
+            if (stack.Count == 0) { stack.Push(cellToFlip); return; };
+            if (stack.Count == 1)
             {
-                cellToFlip.IsFlipped = true;
-                return true;
+                var firstCell = stack.Pop();
+                var match = CheckForMatches(firstCell, cellToFlip);
+                if (match)
+                {
+                    firstCell.IsMatched = true;
+                    cellToFlip.IsMatched = true;
+                }
             }
-            return false;
         }
 
-        public bool CheckForMatches()
+        public bool CheckForMatches(Cell first, Cell second)
         {
-            // Implement match checking logic
-            return false;
+            return first.Image.Equals(second.Image);
         }
     }
 }
