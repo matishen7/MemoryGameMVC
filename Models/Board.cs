@@ -40,7 +40,7 @@ namespace MemoryGame
 
         public bool FlipCard(int cardId)
         {
-            var cellToFlip = cells.First(x => x.Id == cardId);
+            var cellToFlip = cells[cardId];
             if (stack.Count == 0) { stack.Push(cellToFlip); return false; };
             if (stack.Count == 1)
             {

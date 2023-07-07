@@ -12,10 +12,9 @@
             @for (int j = 0; j < Model.n; j++)
             {
                 var imageUrl = Model.cells[count].Image;
-                var cardId = Model.cells[count].Id;
                 var matchClass = Model.cells[count].IsMatched ? "matched" : "";
                 var disabledAttribute = Model.cells[count].IsMatched ? "disabled" : "";
-                <td class="game-cell @matchClass" data-id="@cardId" data-image="@imageUrl">
+                <td class="game-cell @matchClass" data-id="@count" data-image="@imageUrl">
                     <img src="images/cards/backside.png" class="card-back">
                     <img src="@imageUrl" class="card-front">
                 </td>

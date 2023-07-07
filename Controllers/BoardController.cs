@@ -10,6 +10,8 @@ namespace MemoryGameMVC.Controllers
     {
         private readonly ILogger<BoardController> _logger;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private Board gameBoard;
+        private static Dictionary<string, Board> _gameBoards = new Dictionary<string, Board>();
 
 
         public BoardController(ILogger<BoardController> logger, IWebHostEnvironment webHostEnvironment)
@@ -21,7 +23,23 @@ namespace MemoryGameMVC.Controllers
 
         public IActionResult Index()
         {
-            return View("_TableBoard");
+            string sessionId = HttpContext.Session.Id;
+            if (!_gameBoards.ContainsKey(sessionId))
+            {
+                gameBoard = new Board();
+                gameBoard.Shuffle();
+                _gameBoards.Add(sessionId, gameBoard);
+            }
+
+            var currentGameBoard = _gameBoards[sessionId];
+            return View("Board",currentGameBoard);
+        }
+
+        public IActionResult FlipCard(int id)
+        {
+            var currentGameBoard = _gameBoards.Values.First();
+            var match = currentGameBoard.FlipCard(id);
+            return View("Board", currentGameBoard);
         }
     }
 }

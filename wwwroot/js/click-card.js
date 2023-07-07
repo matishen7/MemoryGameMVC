@@ -4,12 +4,12 @@
         var id = clickedCell.data("id");
 
         // Get the image URL from the data attribute
-        var cellImage = clickedCell.data("image");
+        //var cellImage = clickedCell.data("image");
 
         // Make an AJAX POST request to the controller with the image URL
         $.ajax({
             type: "POST",
-            url: "/Home/FlipCard",
+            url: "/Board/FlipCard",
             data: {
                 id: id
             },
@@ -30,6 +30,6 @@
         });
 
         // Show the front image of the clicked cell
-        clickedCell.find(".card-back").hide();
+        //clickedCell.find(".card-back").hide();
     });
 });
