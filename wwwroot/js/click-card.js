@@ -15,10 +15,11 @@
             },
             success: function (response) {
                 // Handle the response from the server
-                if (response.match == true) {
-                    // The image matches
-                    console.log("Image matches!");
-                } else {
+                if (response.MatchedCellsCount !== undefined) {
+                    // Update the "Matches Found" count dynamically
+                    $('#matchesCount').text(response.MatchedCellsCount);
+                }
+                 else {
                     // The image doesn't match
                     console.log("Image doesn't match!");
                 }

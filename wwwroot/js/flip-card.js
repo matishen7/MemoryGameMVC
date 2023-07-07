@@ -38,7 +38,7 @@
                     previouslyOpenedCard.find('.card-front').hide();
                     previouslyOpenedCard.find('.card-back').show();
                     previouslyOpenedCard.removeClass('opened');
-                }, 3000); // Delay of 3 seconds (3000 milliseconds)
+                }, 2000); // Delay of 3 seconds (3000 milliseconds)
             }
         }
     });

@@ -9,6 +9,7 @@ namespace MemoryGame
         public List<Cell> cells;
         public Stack<Cell> stack;
         public int matchedCells = 0;
+        public bool end = false;
         public Board()
         {
             deck = new Deck();
@@ -51,6 +52,8 @@ namespace MemoryGame
                     firstCell.IsMatched = true;
                     cellToFlip.IsMatched = true;
                     matchedCells++;
+
+                    end = EndGame();
                 }
                 return match;
             }

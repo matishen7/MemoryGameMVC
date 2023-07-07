@@ -32,14 +32,26 @@ namespace MemoryGameMVC.Controllers
             }
 
             var currentGameBoard = _gameBoards[sessionId];
-            return View("Board",currentGameBoard);
+            var viewModel = new BoardViewModel
+            {
+                GameBoard = currentGameBoard,
+                MatchedCellsCount = currentGameBoard.matchedCells
+            };
+            return View("Board", viewModel);
         }
 
         public IActionResult FlipCard(int id)
         {
             var currentGameBoard = _gameBoards.Values.First();
+            var key = _gameBoards.Keys.First();
             var match = currentGameBoard.FlipCard(id);
-            return View("Board", currentGameBoard);
+            _gameBoards[key] = currentGameBoard;
+            var viewModel = new BoardViewModel
+            {
+                GameBoard = currentGameBoard,
+                MatchedCellsCount = currentGameBoard.matchedCells
+            };
+            return View("Board", viewModel);
         }
     }
 }
