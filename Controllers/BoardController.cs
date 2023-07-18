@@ -26,7 +26,7 @@ namespace MemoryGameMVC.Controllers
             string sessionId = HttpContext.Session.Id;
             if (!_gameBoards.ContainsKey(sessionId))
             {
-                gameBoard = new Board();
+                gameBoard = new Board(_webHostEnvironment);
                 gameBoard.Shuffle();
                 _gameBoards.Add(sessionId, gameBoard);
             }

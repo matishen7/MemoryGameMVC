@@ -4,14 +4,16 @@ namespace MemoryGame
 {
     public class Board
     {
+        private IWebHostEnvironment Environment;
         public int n = 3, m = 2;
         public Deck deck;
         public Card[][] cells;
         private Card firstFlippedCard = null;
         public int matchedCells = 0;
-        public Board()
+        public Board(IWebHostEnvironment _environment)
         {
-            deck = new Deck();
+            Environment = _environment;
+            deck = new Deck(_environment);
             CellsBuild();
         }
 
