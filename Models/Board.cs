@@ -34,7 +34,7 @@ namespace MemoryGame
             {
                 for (int j = 0; j < n; j++)
                 {
-                    var pickedCard = deck.PickRandomCardFromDeck();
+                    var pickedCard = deck.GetCard();
                     cells[i][j].Image = pickedCard.Image;
                 }
             }
