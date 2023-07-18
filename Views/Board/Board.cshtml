@@ -10,9 +10,17 @@
                 @for (int j = 0; j < Model.GameBoard.n; j++)
                 {
                     var imageUrl = Model.GameBoard.cells[i][j].Image;
+                    var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
                     <td class="game-cell" data-x="@i" data-y="@j" data-image="@imageUrl">
                         <img src="images/backside.png" class="card-back">
-                        <img src="@imageUrl" class="card-front">
+                        @if (isFlipped)
+                        {
+                            <img src="@imageUrl" class="card-front is-flipped">
+                        }
+                        else
+                        {
+                            <img src="@imageUrl" class="card-front">
+                        }
                     </td>
                 }
             </tr>

@@ -44,7 +44,7 @@ namespace MemoryGameMVC.Controllers
         {
             var currentGameBoard = _gameBoards.Values.First();
             var key = _gameBoards.Keys.First();
-            var match = currentGameBoard.FlipCard(x, y);
+            currentGameBoard.FlipCard(x, y);
             _gameBoards[key] = currentGameBoard;
             var viewModel = new BoardViewModel
             {

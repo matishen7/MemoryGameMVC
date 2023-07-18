@@ -6,12 +6,13 @@ namespace MemoryGame
     {
         private IWebHostEnvironment Environment;
         public int n = 3, m = 2;
-        public Deck deck;
+        private Deck deck;
         public Card[][] cells;
-        private Card previouslyFlippedCard = null;
-        private int? previousX = null;
-        private int? previousY = null;
+        private Card previouslyFlippedCard;
         public int matchedCells = 0;
+        private int? previousX;
+        private int? previousY;
+
         public Board(IWebHostEnvironment _environment)
         {
             Environment = _environment;
@@ -60,13 +61,27 @@ namespace MemoryGame
             if (previouslyFlippedCard == null)
             {
                 previouslyFlippedCard = cardToFlip;
-                previousX= x;
-                previousY= y;
+                previousX = x;
+                previousY = y;
+                cells[x][y].IsFlipped = true;
                 return;
             };
             var match = CheckForMatches(previouslyFlippedCard, cardToFlip);
             if (match)
+            {
+                cells[x][y].IsFlipped = true;
+                cells[previousX.Value][previousY.Value].IsFlipped = true;
                 matchedCells += 2;
+            }
+            else
+            {
+                cells[x][y].IsFlipped = false;
+                cells[previousX.Value][previousY.Value].IsFlipped = false;
+            }
+
+            previouslyFlippedCard = null;
+            previousX = null;
+            previousY = null;
         }
 
         public bool CheckForMatches(Card first, Card second)

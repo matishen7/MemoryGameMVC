@@ -34,6 +34,12 @@
     height: 100px;
 }
 
+.card-front is-flipped {
+    display:  contents;
+    width: 100px;
+    height: 100px;
+}
+
 .matched.disabled {
     pointer-events: none;
 }
