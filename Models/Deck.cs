@@ -20,8 +20,8 @@ namespace MemoryGameMVC.Models
             {
                 var card = files[i].Split('\\');
                 var nameOfCard = card[card.Length - 1];
-                if (nameOfCard.Equals("backside.png")) continue;
-                c.Add(new Card() { Name = folderPath + nameOfCard });
+                //if (nameOfCard.Equals("backside.png")) continue;
+                c.Add(new Card() { Image = folderPath + nameOfCard });
             }
             return c;
         }

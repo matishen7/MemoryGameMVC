@@ -6,15 +6,24 @@ namespace MemoryGame
     {
         public int n = 3, m = 2;
         public Deck deck;
-        public List<Cell> cells;
-        public Stack<Cell> stack;
+        public Card[][] cells;
+        private Card firstFlippedCard = null;
         public int matchedCells = 0;
-        public bool end = false;
         public Board()
         {
             deck = new Deck();
-            cells = new List<Cell>();
-            stack = new Stack<Cell>();
+            CellsBuild();
+        }
+
+        private void CellsBuild()
+        {
+            cells = new Card[m][];
+            for (int i = 0; i < m; i++)
+            {
+                cells[i] = new Card[n];
+                for (int j = 0; j < n; j++)
+                    cells[i][j] = new Card();
+            }
         }
 
         public void Shuffle()
@@ -22,8 +31,8 @@ namespace MemoryGame
             for (int i = 0; i < (m * n) / 2; i++)
             {
                 var pickedCard = deck.PickRandomCardFromDeck();
-                cells.Add(new Cell() { Image = pickedCard.Name });
-                cells.Add(new Cell() { Image = pickedCard.Name });
+                cells.Add(new Card() { Image = pickedCard.Name });
+                cells.Add(new Card() { Image = pickedCard.Name });
             }
 
             Random random = new Random();
@@ -33,43 +42,24 @@ namespace MemoryGame
             {
                 a--;
                 int k = random.Next(a + 1);
-                Cell value = cells[k];
+                Card value = cells[k];
                 cells[k] = cells[n];
                 cells[n] = value;
             }
         }
 
-        public bool FlipCard(int cardId)
+        public bool FlipCard(int x, int y)
         {
-            var cellToFlip = cells[cardId];
-            if (stack.Count == 0) { stack.Push(cellToFlip); return false; };
-            if (stack.Count == 1)
-            {
-                var firstCell = stack.Pop();
-                var match = CheckForMatches(firstCell, cellToFlip);
-                if (match)
-                {
-                    firstCell.IsMatched = true;
-                    cellToFlip.IsMatched = true;
-                    matchedCells++;
+            var cellToFlip = cells[x][y];
+            if (firstFlippedCard == null) { firstFlippedCard = cellToFlip; return false; };
+            var match = CheckForMatches(firstFlippedCard, cellToFlip);
+            if (match)
+                matchedCells += 2;
+            return match;        }
 
-                    end = EndGame();
-                }
-                return match;
-            }
-            return false;
-        }
-
-        public bool CheckForMatches(Cell first, Cell second)
+        public bool CheckForMatches(Card first, Card second)
         {
             return first.Image.Equals(second.Image);
-        }
-
-        public bool EndGame()
-        {
-            for (int i = 0; i < cells.Count; i++)
-                if (cells[i].IsMatched == false) return false;
-            return true;
         }
     }
 }
