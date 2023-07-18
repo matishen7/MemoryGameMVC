@@ -35,7 +35,7 @@ namespace MemoryGameMVC.Models
             return cards.Pop();
         }
 
-        static Stack<T> ShuffleDeck<T>(Stack<T> stack)
+        private Stack<T> ShuffleDeck<T>(Stack<T> stack)
         {
             List<T> tempList = new List<T>(stack);
             Random rng = new Random();

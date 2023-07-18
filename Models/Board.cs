@@ -8,7 +8,9 @@ namespace MemoryGame
         public int n = 3, m = 2;
         public Deck deck;
         public Card[][] cells;
-        private Card firstFlippedCard = null;
+        private Card previouslyFlippedCard = null;
+        private int? previousX = null;
+        private int? previousY = null;
         public int matchedCells = 0;
         public Board(IWebHostEnvironment _environment)
         {
@@ -30,24 +32,41 @@ namespace MemoryGame
 
         public void Shuffle()
         {
+            var cards = new List<Card>();
+            for (int i = 0; i < (m * n) / 2; i++)
+            {
+                var pickedCard = deck.GetCard();
+                cards.Add(pickedCard);
+                cards.Add(pickedCard);
+            }
+
+            Random rng = new Random();
+
             for (int i = 0; i < m; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    var pickedCard = deck.GetCard();
-                    cells[i][j].Image = pickedCard.Image;
+                    var indexToPick = rng.Next(0, cards.Count);
+                    cells[i][j].Image = cards[indexToPick].Image;
+                    cards.RemoveAt(indexToPick);
                 }
             }
         }
 
-        public bool FlipCard(int x, int y)
+        public void FlipCard(int x, int y)
         {
-            var cellToFlip = cells[x][y];
-            if (firstFlippedCard == null) { firstFlippedCard = cellToFlip; return false; };
-            var match = CheckForMatches(firstFlippedCard, cellToFlip);
+            if (previousX == x && previousY == y) return;
+            var cardToFlip = cells[x][y];
+            if (previouslyFlippedCard == null)
+            {
+                previouslyFlippedCard = cardToFlip;
+                previousX= x;
+                previousY= y;
+                return;
+            };
+            var match = CheckForMatches(previouslyFlippedCard, cardToFlip);
             if (match)
                 matchedCells += 2;
-            return match;
         }
 
         public bool CheckForMatches(Card first, Card second)
