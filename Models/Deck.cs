@@ -6,7 +6,7 @@ namespace MemoryGameMVC.Models
     public class Deck
     {
         private string folderPath = "\\images\\cards\\";
-        public List<Card> cards;
+        private List<Card> cards;
         public Deck()
         {
             cards = GetDeck();
@@ -15,7 +15,8 @@ namespace MemoryGameMVC.Models
         private List<Card> GetDeck()
         {
             var c = new List<Card>();
-            string[] files = System.IO.Directory.GetFiles("C:\\Mentorship\\MemoryGameMVC\\wwwroot" + folderPath);
+            var f = System.Configuration.ConfigurationManager.AppSettings["cardUrl"];
+            string[] files = Directory.GetFiles(f);
             for (int i = 0; i < files.Length; i++)
             {
                 var card = files[i].Split('\\');

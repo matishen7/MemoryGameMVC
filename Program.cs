@@ -14,6 +14,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddMvc();
 
 builder.Services.AddSession(options =>
 {

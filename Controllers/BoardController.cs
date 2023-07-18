@@ -40,11 +40,11 @@ namespace MemoryGameMVC.Controllers
             return View("Board", viewModel);
         }
 
-        public IActionResult FlipCard(int id)
+        public IActionResult FlipCard(int x, int y)
         {
             var currentGameBoard = _gameBoards.Values.First();
             var key = _gameBoards.Keys.First();
-            var match = currentGameBoard.FlipCard(id);
+            var match = currentGameBoard.FlipCard(x, y);
             _gameBoards[key] = currentGameBoard;
             var viewModel = new BoardViewModel
             {

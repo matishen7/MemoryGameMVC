@@ -1,11 +1,7 @@
 ﻿@model MemoryGameMVC.Models.BoardViewModel
 
-@{
-    int count = 0;
-}
-
 <h2>Memory Game Board</h2>
-@if (!Model.GameBoard.end)
+@if (Model.GameBoard.matchedCells != Model.GameBoard.m  * Model.GameBoard.n)
 {
     <table id="table_board">
         @for (int i = 0; i < Model.GameBoard.m; i++)
@@ -13,14 +9,11 @@
             <tr>
                 @for (int j = 0; j < Model.GameBoard.n; j++)
                 {
-                    var imageUrl = Model.GameBoard.cells[count].Image;
-                    var matchClass = Model.GameBoard.cells[count].IsMatched ? "matched" : "";
-                    var disabledAttribute = Model.GameBoard.cells[count].IsMatched ? "disabled" : "";
-                    <td class="game-cell @matchClass" data-id="@count" data-image="@imageUrl">
+                    var imageUrl = Model.GameBoard.cells[i][j].Image;
+                    <td class="game-cell" data-x="@i" data-y="@j" data-image="@imageUrl">
                         <img src="images/cards/backside.png" class="card-back">
                         <img src="@imageUrl" class="card-front">
                     </td>
-                    count++;
                 }
             </tr>
         }

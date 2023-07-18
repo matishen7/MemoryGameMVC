@@ -28,23 +28,13 @@ namespace MemoryGame
 
         public void Shuffle()
         {
-            for (int i = 0; i < (m * n) / 2; i++)
+            for (int i = 0; i < m; i++)
             {
-                var pickedCard = deck.PickRandomCardFromDeck();
-                cells.Add(new Card() { Image = pickedCard.Name });
-                cells.Add(new Card() { Image = pickedCard.Name });
-            }
-
-            Random random = new Random();
-
-            int a = cells.Count;
-            while (a > 1)
-            {
-                a--;
-                int k = random.Next(a + 1);
-                Card value = cells[k];
-                cells[k] = cells[n];
-                cells[n] = value;
+                for (int j = 0; j < n; j++)
+                {
+                    var pickedCard = deck.PickRandomCardFromDeck();
+                    cells[i][j].Image = pickedCard.Image;
+                }
             }
         }
 
@@ -55,7 +45,8 @@ namespace MemoryGame
             var match = CheckForMatches(firstFlippedCard, cellToFlip);
             if (match)
                 matchedCells += 2;
-            return match;        }
+            return match;
+        }
 
         public bool CheckForMatches(Card first, Card second)
         {
