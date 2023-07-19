@@ -21,12 +21,12 @@ namespace MemoryGameMVC.Controllers
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int m, int n)
         {
             string sessionId = HttpContext.Session.Id;
             if (!_gameBoards.ContainsKey(sessionId))
             {
-                gameBoard = new Board(_webHostEnvironment);
+                gameBoard = new Board(_webHostEnvironment, m, n);
                 gameBoard.Shuffle();
                 _gameBoards.Add(sessionId, gameBoard);
             }

@@ -5,7 +5,7 @@ namespace MemoryGame
     public class Board
     {
         private IWebHostEnvironment Environment;
-        public int n = 3, m = 2;
+        private int m, n;
         private Deck deck;
         public Card[][] cells;
         private Card previouslyFlippedCard;
@@ -13,11 +13,27 @@ namespace MemoryGame
         private int? previousX;
         private int? previousY;
 
-        public Board(IWebHostEnvironment _environment)
+        public Board(IWebHostEnvironment _environment, int m, int n)
         {
+            if (m > 0 && n > 0)
+            {
+                this.m = m;
+                this.n = n;
+            }
+            else throw new ArgumentOutOfRangeException();
             Environment = _environment;
             deck = new Deck(_environment);
             CellsBuild();
+        }
+
+        public int GetM()
+        {
+            return m;
+        }
+
+        public int GetN()
+        {
+            return n;
         }
 
         private void CellsBuild()

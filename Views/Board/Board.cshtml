@@ -1,18 +1,18 @@
 ﻿@model MemoryGameMVC.Models.BoardViewModel
 
 <h2>Memory Game Board</h2>
-@if (Model.GameBoard.matchedCells != Model.GameBoard.m  * Model.GameBoard.n)
+@if (Model.GameBoard.matchedCells != Model.GameBoard.GetM()  * Model.GameBoard.GetN())
 {
     <table id="table_board">
-        @for (int i = 0; i < Model.GameBoard.m; i++)
+        @for (int i = 0; i < Model.GameBoard.GetM(); i++)
         {
             <tr>
-                @for (int j = 0; j < Model.GameBoard.n; j++)
+                @for (int j = 0; j < Model.GameBoard.GetN(); j++)
                 {
                     var imageUrl = Model.GameBoard.cells[i][j].Image;
                     var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
                     <td class="game-cell" data-x="@i" data-y="@j" data-image="@imageUrl">
-                        <img src="images/backside.png" class="card-back">
+                        <img src="@Url.Content("~/images/backside.png")" class="card-back">
                         @if (isFlipped)
                         {
                             <img src="@imageUrl" class="card-front is-flipped">
