@@ -10,6 +10,7 @@ namespace MemoryGameMVC.Models
         private IWebHostEnvironment Environment;
         private string folderPath = "\\images\\cards\\";
         private Stack<Card> cards;
+        private int NumberOfCards = 0;
         public Deck(IWebHostEnvironment _environment)
         {
             Environment = _environment;
@@ -26,8 +27,13 @@ namespace MemoryGameMVC.Models
                 var nameOfCard = card[card.Length - 1];
                 c.Push(new Card() { Image = folderPath + nameOfCard });
             }
-
+            NumberOfCards = c.Count();
             return ShuffleDeck(c);
+        }
+
+        public int GetNumberOfCardsInDeck()
+        {
+            return NumberOfCards;
         }
 
         public Card GetCard()

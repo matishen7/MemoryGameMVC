@@ -14,14 +14,16 @@ namespace MemoryGame
 
         public Board(IWebHostEnvironment _environment, int m, int n)
         {
+            
+            Environment = _environment;
+            deck = new Deck(_environment);
             if (m > 0 && n > 0)
             {
                 this.m = m;
                 this.n = n;
             }
-            else throw new ArgumentOutOfRangeException();
-            Environment = _environment;
-            deck = new Deck(_environment);
+            else if (m * n > deck.GetNumberOfCardsInDeck()) throw new ArgumentOutOfRangeException("Insufficient number of cards! ");
+            else throw new ArgumentOutOfRangeException("Incorrect input number of cards!");
             CellsBuild();
         }
 
