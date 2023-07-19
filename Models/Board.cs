@@ -9,9 +9,8 @@ namespace MemoryGame
         private Deck deck;
         public Card[][] cells;
         private Card previouslyFlippedCard;
+        private int? prevX, prevY;
         public int matchedCells = 0;
-        private int? previousX;
-        private int? previousY;
 
         public Board(IWebHostEnvironment _environment, int m, int n)
         {
@@ -72,32 +71,34 @@ namespace MemoryGame
 
         public void FlipCard(int x, int y)
         {
-            if (previousX == x && previousY == y) return;
-            var cardToFlip = cells[x][y];
+            if (x >= m || y >= n) throw new ArgumentOutOfRangeException();
+            
+            if (cells[x][y].IsFlipped) return;
+
             if (previouslyFlippedCard == null)
             {
-                previouslyFlippedCard = cardToFlip;
-                previousX = x;
-                previousY = y;
                 cells[x][y].IsFlipped = true;
+                previouslyFlippedCard = cells[x][y];
+                prevX = x; prevY = y;
                 return;
             };
-            var match = CheckForMatches(previouslyFlippedCard, cardToFlip);
+            var match = CheckForMatches(previouslyFlippedCard, cells[x][y]);
             if (match)
             {
-                cells[x][y].IsFlipped = true;
-                cells[previousX.Value][previousY.Value].IsFlipped = true;
+                cells[x][y].IsFlipped = false;
+                cells[prevX.Value][prevY.Value].IsFlipped = false;
+                cells[x][y].IsMatched = true;
+                cells[prevX.Value][prevY.Value].IsMatched = true;
                 matchedCells += 2;
             }
             else
             {
                 cells[x][y].IsFlipped = false;
-                cells[previousX.Value][previousY.Value].IsFlipped = false;
+                cells[prevX.Value][prevY.Value].IsFlipped = false;
             }
 
             previouslyFlippedCard = null;
-            previousX = null;
-            previousY = null;
+            prevX = null; prevY = null;
         }
 
         public bool CheckForMatches(Card first, Card second)

@@ -11,11 +11,16 @@
                 {
                     var imageUrl = Model.GameBoard.cells[i][j].Image;
                     var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
+                    var isMatched = Model.GameBoard.cells[i][j].IsMatched;
                     <td class="game-cell" data-x="@i" data-y="@j" data-image="@imageUrl">
                         <img src="@Url.Content("~/images/backside.png")" class="card-back">
                         @if (isFlipped)
                         {
                             <img src="@imageUrl" class="card-front is-flipped">
+                        }
+                        else if (isMatched)
+                        {
+                            <img src="@imageUrl" class="card-front is-matched">
                         }
                         else
                         {
