@@ -17,7 +17,6 @@
                         @if (isFlipped)
                         {
                             <img src="@imageUrl" class="card-front is-flipped">
-                            <img src="@Url.Content("~/images/backside.png")" class="card-back is-flipped">
                         }
                         else if (isMatched)
                         {
@@ -25,7 +24,6 @@
                         }
                         else
                         {
-                            <img src="@imageUrl" class="card-front">
                             <img src="@Url.Content("~/images/backside.png")" class="card-back">
                         }
                     </td>
