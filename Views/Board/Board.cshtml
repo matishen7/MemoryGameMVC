@@ -12,7 +12,7 @@
                     var imageUrl = Model.GameBoard.cells[i][j].Image;
                     var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
                     var isMatched = Model.GameBoard.cells[i][j].IsMatched;
-                    <td class="game-cell" data-x="@i" data-y="@j" data-image="@imageUrl">
+                    <td class="game-cell" data-x="@i" data-y="@j">
                         
                         @if (isFlipped)
                         {
@@ -21,8 +21,7 @@
                         }
                         else if (isMatched)
                         {
-                            <img src="@imageUrl" class="card-front is-matched">
-                            <img src="@Url.Content("~/images/backside.png")" class="card-back is-matched">
+                            <img src="@Url.Content("~/images/match.png")" class="card-back is-matched">
                         }
                         else
                         {
@@ -39,5 +38,5 @@
 }
 else
 {
-     <p>End of Game></p>
+     <p>End of Game</p>
 }

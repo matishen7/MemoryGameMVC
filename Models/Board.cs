@@ -74,7 +74,7 @@ namespace MemoryGame
         {
             if (x >= m || y >= n) throw new ArgumentOutOfRangeException();
             
-            if (cells[x][y].IsFlipped) return;
+            if (cells[x][y].IsFlipped || cells[x][y].IsMatched) return;
 
             if (coordinates.Count == 0)
             {
@@ -93,6 +93,7 @@ namespace MemoryGame
                 {
                     cells[x][y].IsMatched = true;
                     cells[prevCoordinate.X][prevCoordinate.Y].IsMatched = true;
+                    matchedCells += 2;
                 }
             }
 

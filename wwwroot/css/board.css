@@ -29,24 +29,33 @@
             z-index: -1;
         }
 
+/* Styling for card-front and card-back */
 .card-front {
     display: none; /* Hide the front image initially */
     width: 100px;
     height: 100px;
 }
 
-    .card-front.is-flipped {
-        display: inline;
-        width: 100px;
-        height: 100px;
-    }
 
-.card-back.is-flipped {
-    display: none;
+.card-back {
     width: 100px;
     height: 100px;
 }
 
-td.card-front.is-matched {
-    pointer-events: none;
+
+card-front.is-matched {
+    display: inline;
 }
+
+card-back.is-matched {
+    display: inline;
+}
+
+.card-front.is-flipped {
+    display: inline;
+}
+
+.card-back.is-flipped {
+    display: none;
+}
+
