@@ -40,12 +40,13 @@
         width: 100px;
         height: 100px;
     }
-    .card-back.is-flipped {
-        display: none;
-        width: 100px;
-        height: 100px;
-    }
 
-    .card-front is-matched {
-        pointer-events: none;
-    }
+.card-back.is-flipped {
+    display: none;
+    width: 100px;
+    height: 100px;
+}
+
+td.card-front.is-matched {
+    pointer-events: none;
+}

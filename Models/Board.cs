@@ -93,7 +93,19 @@ namespace MemoryGame
                 {
                     cells[x][y].IsMatched = true;
                     cells[prevCoordinate.X][prevCoordinate.Y].IsMatched = true;
-                }                
+                }
+            }
+
+            else
+            {
+                while (coordinates.Count > 0)
+                {
+                    var prevCoordinate = coordinates.Pop();
+                    cells[prevCoordinate.X][prevCoordinate.Y].IsFlipped = false;
+                }
+
+                coordinates.Push(new Coordinate(x, y));
+                cells[x][y].IsFlipped = true;
             }
         }
 
