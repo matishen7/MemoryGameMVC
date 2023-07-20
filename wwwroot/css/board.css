@@ -28,18 +28,24 @@
             background-color: rgba(0, 0, 0, 0.2);
             z-index: -1;
         }
+
 .card-front {
     display: none; /* Hide the front image initially */
     width: 100px;
     height: 100px;
 }
 
-.card-front is-flipped {
-    display:    inline;
-    width: 100px;
-    height: 100px;
-}
+    .card-front.is-flipped {
+        display: inline;
+        width: 100px;
+        height: 100px;
+    }
+    .card-back.is-flipped {
+        display: none;
+        width: 100px;
+        height: 100px;
+    }
 
-.matched.disabled {
-    pointer-events: none;
-}
+    .card-front is-matched {
+        pointer-events: none;
+    }

@@ -1,4 +1,5 @@
-﻿using MemoryGameMVC.Models;
+﻿using Humanizer;
+using MemoryGameMVC.Models;
 
 namespace MemoryGame
 {
@@ -8,10 +9,8 @@ namespace MemoryGame
         private int m, n;
         private Deck deck;
         public Card[][] cells;
-        private Card previouslyFlippedCard;
-        private int? prevX, prevY;
         public int matchedCells = 0;
-
+        private Stack<Coordinate> coordinates= new Stack<Coordinate>();
         public Board(IWebHostEnvironment _environment, int m, int n)
         {
             
@@ -77,30 +76,25 @@ namespace MemoryGame
             
             if (cells[x][y].IsFlipped) return;
 
-            if (previouslyFlippedCard == null)
+            if (coordinates.Count == 0)
             {
                 cells[x][y].IsFlipped = true;
-                previouslyFlippedCard = cells[x][y];
-                prevX = x; prevY = y;
-                return;
-            };
-            var match = CheckForMatches(previouslyFlippedCard, cells[x][y]);
-            if (match)
-            {
-                cells[x][y].IsFlipped = false;
-                cells[prevX.Value][prevY.Value].IsFlipped = false;
-                cells[x][y].IsMatched = true;
-                cells[prevX.Value][prevY.Value].IsMatched = true;
-                matchedCells += 2;
-            }
-            else
-            {
-                cells[x][y].IsFlipped = false;
-                cells[prevX.Value][prevY.Value].IsFlipped = false;
+                coordinates.Push(new Coordinate(x, y));
             }
 
-            previouslyFlippedCard = null;
-            prevX = null; prevY = null;
+            else if (coordinates.Count == 1)
+            {
+                var prevCoordinate = coordinates.Peek();
+                cells[x][y].IsFlipped = true;
+                coordinates.Push(new Coordinate(x, y));
+                cells[prevCoordinate.X][prevCoordinate.Y].IsFlipped = true;
+                var match = CheckForMatches(cells[x][y], cells[prevCoordinate.X][prevCoordinate.Y]);
+                if (match)
+                {
+                    cells[x][y].IsMatched = true;
+                    cells[prevCoordinate.X][prevCoordinate.Y].IsMatched = true;
+                }                
+            }
         }
 
         public bool CheckForMatches(Card first, Card second)
