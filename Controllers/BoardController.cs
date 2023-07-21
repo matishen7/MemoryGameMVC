@@ -23,8 +23,8 @@ namespace MemoryGameMVC.Controllers
 
         public IActionResult Index()
         {
-            int m = 2;
-            int n = 2;
+            int m = 4;
+            int n = 5;
             if (_progress.Count == 0)
             {
                 gameBoard = new Board(_webHostEnvironment, m, n);
@@ -41,6 +41,7 @@ namespace MemoryGameMVC.Controllers
             return View("Board", viewModel);
         }
 
+        [HttpPost]
         public IActionResult FlipCard(int x, int y)
         {
             var currentGameBoard = _progress.Values.First();

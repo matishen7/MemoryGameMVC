@@ -1,44 +1,70 @@
 ﻿@model MemoryGameMVC.Models.BoardViewModel
 
 <h2>Memory Game Board</h2>
-@if (Model.GameBoard.matchedCells != Model.GameBoard.GetM()  * Model.GameBoard.GetN())
+@if (Model.GameBoard.matchedCells != Model.GameBoard.GetM() * Model.GameBoard.GetN())
 {
-    <table id="table_board">
-        @for (int i = 0; i < Model.GameBoard.GetM(); i++)
-        {
-            <tr>
-                @for (int j = 0; j < Model.GameBoard.GetN(); j++)
-                {
-                    var imageUrl = Model.GameBoard.cells[i][j].Image;
-                    var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
-                    var isMatched = Model.GameBoard.cells[i][j].IsMatched;
-                    <td class="game-cell" data-x="@i" data-y="@j">
-                        
-                        @if (isFlipped)
-                        {
-                            <img src="@imageUrl" class="card-front is-flipped">
-                        }
-                        else if (isMatched)
-                        {
-                            <img src="@Url.Content("~/images/match.png")" class="card-back is-matched">
-                        }
-                        else
-                        {
-                            <img src="@Url.Content("~/images/backside.png")" class="card-back">
-                        }
-                    </td>
-                }
-            </tr>
-        }
-    </table>
+    <form id="flipForm" method="post" action="@Url.Action("FlipCard", "Board")">
+        <table id="table_board">
+            @for (int i = 0; i < Model.GameBoard.GetM(); i++)
+            {
+                <tr>
+                    @for (int j = 0; j < Model.GameBoard.GetN(); j++)
+                    {
+                        var imageUrl = Model.GameBoard.cells[i][j].Image;
+                        var isFlipped = Model.GameBoard.cells[i][j].IsFlipped;
+                        var isMatched = Model.GameBoard.cells[i][j].IsMatched;
+                        <td class="game-cell">
+                            <button type="submit" name="x" value="@i" formnovalidate style="background: none; border: none; padding: 0;">
+                                @if (isFlipped)
+                                {
+                                    <img src="@imageUrl" class="card-front is-flipped">
+                                }
+                                else if (isMatched)
+                                {
+                                    <img src="@imageUrl" class="card-back is-matched">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/images/backside.png")" class="card-back">
+                                }
+                            </button>
+                            <input type="hidden" name="y" value="@j" />
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+        <input type="submit" value="Submit" style="display: none;" />
+
+    </form>
     <p>Matches Found: <span id="matchesCount">@Model.MatchedCellsCount</span></p>
 
 }
 else
 {
-     <p>End of Game. Please click to start new game.</p>
+    <p>End of Game. Please click to start new game.</p>
     @using (Html.BeginForm("Index", "Board", FormMethod.Post))
     {
         <input type="submit" value="New Game" />
     }
+}
+@section scripts {
+    <script>
+        // JavaScript function to handle card click and submit the form with the x and y values
+        $(document).ready(function () {
+            $(".game-cell button[type='submit']").click(function () {
+                var x = $(this).val(); // Get the value of the "x" attribute
+                var y = $(this).siblings("input[name='y']").val(); // Get the value of the "y" attribute
+
+                // Update the "x" and "y" input values before submitting the form
+                $("#flipForm input[name='x']").val(x);
+                $("#flipForm input[name='y']").val(y);
+
+                // Submit the form with the updated "x" and "y" values
+                $("#flipForm").submit();
+            });
+        });
+    </script>
+}
+
 }
