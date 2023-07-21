@@ -23,8 +23,8 @@ namespace MemoryGameMVC.Controllers
 
         public IActionResult Index()
         {
-            int m = 4;
-            int n = 5;
+            int m = 3;
+            int n = 2;
             if (_progress.Count == 0)
             {
                 gameBoard = new Board(_webHostEnvironment, m, n);
@@ -54,6 +54,12 @@ namespace MemoryGameMVC.Controllers
                 MatchedCellsCount = currentGameBoard.matchedCells
             };
             return View("Board", viewModel);
+        }
+
+        public IActionResult NewGame()
+        {
+            _progress.Clear();
+            return RedirectToAction("Index");
         }
     }
 }
