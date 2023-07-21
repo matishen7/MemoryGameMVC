@@ -36,5 +36,9 @@
 }
 else
 {
-     <p>End of Game</p>
+     <p>End of Game. Please click to start new game.</p>
+    @using (Html.BeginForm("Index", "Board", FormMethod.Post))
+    {
+        <input type="submit" value="New Game" />
+    }
 }
